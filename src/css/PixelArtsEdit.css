@@ -1,0 +1,84 @@
+#pixelArt{
+    float:left;
+    margin-top:200px;
+    margin-left:100px;
+    margin-right:100px;
+    height:642px;
+    width:642px;
+}
+
+#main table,td{
+    border-collapse: collapse;
+    border:1px solid darkgrey;
+}
+
+#main td{
+    height:17px;
+    width:17px;
+}
+
+#main #content{
+    width:600px;
+    float:left;
+}
+
+#main #colorPalet{
+    width:300px;
+    margin:auto;
+    padding-top:50px;
+}
+
+#colorTitle{
+    border: medium solid black;
+}
+
+#main button{
+    height:60px;
+    width:60px;
+    margin:10px;
+}
+
+#buttonRed{
+    background-color: red;
+}
+#buttonGreen{
+    background-color: green;
+}
+#buttonBlue{
+    background-color: blue;
+}
+#buttonYellow{
+    background-color: yellow;
+}
+#buttonCyan{
+    background-color: cyan;
+}
+#buttonPurple{
+    background-color: purple;
+}
+#buttonBlack{
+    background-color: black;
+}
+#buttonWhite{
+    background-color: white;
+}
+#savePixelArt{
+    margin-top:100px;
+}
+#saveName{
+    height:30px;
+    width:200px;
+}
+#buttonSave{
+    height:35px;
+    width:50px;
+}
+#buttonShine{
+    margin-right:100px;
+    height:35px;
+    width:100px;
+}
+#buttonDelete{
+    height:50px;
+    width:50px;
+}

@@ -1,0 +1,33 @@
+*{
+    padding: 0px;
+    margin: 0px;
+ }
+ @font-face {
+	font-family: 'MyFont';
+	src: url(./myfont.ttf);
+}
+div.title,h1{
+	font-family: MyFont;
+}
+
+
+ h1{
+    font-size: 100px;
+    text-align: center;
+    padding: 30px 0px;
+ }
+ div.link{
+    font-size: 50px;
+    text-align: center;
+   
+ }
+ div.button-top{
+    font-size: 25px;
+    text-align: auto;
+    padding: 0px 40px;
+   
+ }
+ div.title{
+     font-size: 50px;
+     padding: 30px;
+ }
