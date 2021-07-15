@@ -1,10 +1,12 @@
 #pixelArt{
     float:left;
-    margin-top:200px;
-    margin-left:50px;
-    margin-right:50px;
-    height:642px;
-    width:642px;
+    margin:50px 20px 30px 30px;
+    height:576px;
+    width:576px;
+}
+
+#main{
+    height:656px;
 }
 
 #main table,td{
@@ -18,21 +20,25 @@
 }
 
 #main #content{
-    width:600px;
+    margin-left:100px;
+    width:300px;
     float:left;
 }
 
-#main #colorPalet{
+#main div#colorPalet{
     width:300px;
-    margin:auto;
     padding-top:50px;
 }
 
-#colorTitle{
+#main div#currentColor{
     border: medium solid black;
+    margin-bottom:20px;
+    height:150px;
+    width:100%;
+    box-sizing: border-box;
 }
 
-#main button{
+#main button.colorButton{
     height:60px;
     width:60px;
     margin:10px;
@@ -63,11 +69,41 @@
     background-color: white;
 }
 #savePixelArt{
-    margin-top:100px;
+    display: flex;
+	justify-content: space-between;
+}
+div#undoNextButton{
+    width:40px;
+    margin-top:50px;
+    float:left;
+}
+div#errorMessage{
+    margin-top:10px;
+    font-size: 13px;
+}
+a#toLink{
+    text-decoration: none;
+    color:inherit;
+}
+div#backgroundColorButtons {
+    margin-top:80px;
+    margin-left:80px;
+    width:50px;
+    float:left;
+}
+
+div#backgroundColorButtons img{
+    margin-left:10px;
+}
+
+
+div#backgroundColorButtons button.colorButton{
+    width:40px;
+    height:40px;
 }
 #saveName{
     height:30px;
-    width:200px;
+    width:300px;
 }
 #buttonSave{
     height:35px;

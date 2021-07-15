@@ -24,11 +24,11 @@ const SavePixelArt = (props: SavePixelArtProps) => {
 
     return(
         <div>
+            <input type="text" id="saveName" value={name} onChange={handleNameChange} placeholder="名前を付けて保存"/>
             <div id="savePixelArt">
-                <input type="text" id="saveName" value={name} onChange={handleNameChange} placeholder="名前を付けて保存"/>
+                <button type="button" id="buttonDelete" name="buttonDelete" value="delete" onClick={handleDeleteColor}>全消し</button>
+                <button type="button" id="saveApi" name="saveApi" value="saveApi" onClick={handleSaveApi}>テンプレートをDBに保存</button>
             </div>
-            <button type="button" id="buttonDelete" name="buttonDelete" value="delete" onClick={handleDeleteColor}>全消し</button>
-            <button type="button" id="saveApi" name="saveApi" value="saveApi" onClick={handleSaveApi}>テンプレートをDBに保存</button>
         </div>
     );
 }
