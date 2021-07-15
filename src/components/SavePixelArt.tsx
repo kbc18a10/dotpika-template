@@ -7,7 +7,7 @@ type SavePixelArtProps = {
     onSaveApi:() => void;
 }
 
-const SavePixelArt = (props: SavePixelArtProps) => {
+const SavePixelArt = React.memo((props: SavePixelArtProps) => {
     const name = props.name;
 
     const handleNameChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const SavePixelArt = (props: SavePixelArtProps) => {
             </div>
         </div>
     );
-}
+})
 
 export default SavePixelArt;
 
