@@ -9,7 +9,7 @@ type PixelRowProps = {
     onPixelClick: (x:number,y:number,red:string,green:string,blue:string) => void;
 }
 
-const PixelRow = (props: PixelRowProps) => {
+const PixelRow = React.memo((props: PixelRowProps) => {
     const {x,y,red,green,blue} = props.pixel;
 
     const handleMouseDown = () => {
@@ -35,7 +35,7 @@ const PixelRow = (props: PixelRowProps) => {
     return(
         <td className="thPixel" id={id} onDragStart={(e) => {e.preventDefault();}} onMouseDown={handleMouseDown} onMouseUp={handleMouseup} onClick={handlePixelClick} onMouseMove={handlePixelOver}></td>
     );
-}
+})
 
 export default PixelRow;
 
