@@ -14,7 +14,7 @@ type ColorObj = {
   blue: string;
 }
 
-let PixelTable:Dot[][] = [...Array(32)].map((_, i) => {
+let PixelTable: Dot[][] = [...Array(32)].map((_, i) => {
   return [...Array(32)].map((_, j) => {
     return {
       x: i,
@@ -26,22 +26,27 @@ let PixelTable:Dot[][] = [...Array(32)].map((_, i) => {
   })
 });
 
-const Color:ColorObj[] = [{ red: '1', green: '0', blue: '0' }, { red: '0', green: '1', blue: '0' }, { red: '0', green: '0', blue: '1' }, { red: '1', green: '1', blue: '0' }, { red: '0', green: '1', blue: '1' }, { red: '1', green: '0', blue: '1' }, { red: '0', green: '0', blue: '0' }, { red: '1', green: '1', blue: '1' }]
+const Color: ColorObj[] = [{ red: '1', green: '0', blue: '0' }, { red: '0', green: '1', blue: '0' }, { red: '0', green: '0', blue: '1' }, { red: '1', green: '1', blue: '0' }, { red: '0', green: '1', blue: '1' }, { red: '1', green: '0', blue: '1' }, { red: '0', green: '0', blue: '0' }, { red: '1', green: '1', blue: '1' }]
 
-let Clicked:boolean= false;
+let Clicked: boolean = false;
 
-let saveName:string = "";
+let saveName: string = "";
 
-let isNewPixelArt:boolean = true;
+let isNewPixelArt: boolean = true;
 
 const PixelArtsEdit = () => {
+  const [save, setSaveName] = useState(saveName);
   const [pixels, setPixel] = useState(PixelTable);
+  const [image, setImage] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState('');
+
   const [isClicked, setClicked] = useState(Clicked);
   const [color, setColor] = useState(Color[0]);
-  const [save, setSaveName] = useState(saveName);
   const [isNew, setIsNewPixelArt] = useState(isNewPixelArt);
-  const [imageSrc, setImageSrc] = useState("");
   const location = useLocation().pathname.slice(-1);
+
+  // バリデーションメッセージ
+  const [errorMessages, setErrorMessages] = useState('');
 
   useEffect(() => {
     const loadPixelArt = localStorage.getItem(location);
@@ -57,7 +62,7 @@ const PixelArtsEdit = () => {
     pixels.map((row) => {
       row.map((p) => {
         let id = (p.x < 10 ? "0" + p.x : p.x) + "" + (p.y < 10 ? "0" + p.y : p.y)
-        let element:any = document.getElementById(id);
+        let element: any = document.getElementById(id);
         element.style.backgroundColor = `rgb(${p.red === '0' ? 0 : 255},${p.green === '0' ? 0 : 255},${p.blue === '0' ? 0 : 255})`;
       })
     })
@@ -88,7 +93,7 @@ const PixelArtsEdit = () => {
   }
 
 
-  const handlePixelOver = (x:number, y:number, red:string, green:string, blue:string) => {
+  const handlePixelOver = (x: number, y: number, red: string, green: string, blue: string) => {
     if (isClicked) {
       const newPixels = pixels.map((row) => {
         return row.map((p) => {
@@ -102,7 +107,7 @@ const PixelArtsEdit = () => {
     }
   }
 
-  const handlePixelClick = (x:number, y:number, red:string, green:string, blue:string) => {
+  const handlePixelClick = (x: number, y: number, red: string, green: string, blue: string) => {
     const newPixels = pixels.map((row) => {
       return row.map((p) => {
         if (x === p.x && y === p.y) {
@@ -115,79 +120,72 @@ const PixelArtsEdit = () => {
   }
 
 
-  const handleColorChange = (index:number) => {
+  const handleColorChange = (index: number) => {
     setColor(Color[index]);
   }
 
-  const handleNameChange = (name:string) => {
+  const handleNameChange = (name: string) => {
     setSaveName(name);
 
   }
-  
+
   const handleDeleteColor = () => {
     setPixel(PixelTable);
   }
 
   const handleSaveApi = async () => {
+    // 名前のバリデーション
+    if (!save) {
+      setErrorMessages('名前が入力されていません');
+      return;
+    }
+
+    // サンプル画像のバリデーション
+    if (!image) {
+      setErrorMessages('画像ファイルが挿入されていません');
+      return;
+    }
+
+    setErrorMessages('');
+
     try {
-      let data = {
-        name:save,
-        example_image:imageSrc,
-        Dots: pixels
-      };
+      const data = new FormData();
+      data.append('name', save);
+      data.append('example_image', image);
+      data.append('Dots', JSON.stringify(pixels));
+
       const response = await axios.post(
         "http://localhost:5000/api/pixel-arts-templates/save", data, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
+        headers: {
+          'Content-Type': 'application/json',
         }
-      )
-      .then((res) => {
-        console.log(res);
       })
-      console.log(response);
+      alert('保存しました');
     } catch (error) {
       console.error('Error:', error.response);
     }
   }
 
-  const handleDisp = async () => {
-    const previewFile = (file: Blob) => {
-      let img :any= document.getElementById('pre');
+  const handleDisp = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-      // FileReaderオブジェクトを作成
-      const reader = new FileReader();
-      
-      // URLとして読み込まれたときに実行する処理
-      reader.onload = function (e:any) {
-        const imageUrl = e.target.result; // URLはevent.target.resultで呼び出せる
-        img.src = imageUrl; // URLをimg要素にセット
-        console.log("imageUrl:" + imageUrl);
-        setImageSrc(imageUrl);
-      }
-    
-      // いざファイルをURLとして読み込む
-      reader.readAsDataURL(file);
+    if (e.target.files) {
+      setImageSrc(window.URL.createObjectURL(e.target.files[0]));
+
+      setImage(e.target.files[0]);
     }
-    const fileInput:any = document.getElementById('example');
-    const files:any = fileInput.files;
-    for (let i = 0; i < files.length; i++) {
-      previewFile(files[i]);　
-    }    
-        
   }
 
   const handleGetData = async () => {
     const response = await axios.get(
-      "http://localhost:5000/api/pixel-arts-templates/",{
-        headers: {
-          'Content-Type': 'application/json',
-        }
+      "http://localhost:5000/api/pixel-arts-templates/", {
+      headers: {
+        'Content-Type': 'application/json',
       }
+    }
     )
-    .then((res) => {
-      console.log("res:" + JSON.stringify(res));
-    })
+      .then((res) => {
+        console.log("res:" + JSON.stringify(res));
+      })
     console.log("response");
     console.log(response);
   }
@@ -244,14 +242,14 @@ const PixelArtsEdit = () => {
           <ColorButton key="black" value="black" index={6} onColorChange={(index) => handleColorChange(index)} />
           <ColorButton key="white" value="white" index={7} onColorChange={(index) => handleColorChange(index)} />
         </div>
-        <input type="file" id="example" accept="image/*"/>
-        <button onClick={() => handleDisp()}>表示</button>
-        <div id="preview"><img id="pre" src="" width="500" height="500" /></div>
+        <input type="file" id="example" onChange={handleDisp} accept="image/*" />
+        <div id="preview"><img id="pre" src={imageSrc} width="500" height="500" /></div>
         <button onClick={() => handleGetData()}>取得</button>
+        <p>{errorMessages}</p>
         <SaveName name={save} onNameChange={(name) => handleNameChange(name)}
           onDeleteColor={() => handleDeleteColor()} onSaveApi={() => handleSaveApi()} />
       </div>
-    </div>
+    </div >
   );
 };
 
