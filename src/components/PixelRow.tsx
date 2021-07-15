@@ -33,7 +33,7 @@ const PixelRow = (props: PixelRowProps) => {
 
 
     return(
-        <td className="thPixel" id={id} onMouseDown={handleMouseDown} onMouseUp={handleMouseup} onClick={handlePixelClick} onMouseMove={handlePixelOver}></td>
+        <td className="thPixel" id={id} onDragStart={(e) => {e.preventDefault();}} onMouseDown={handleMouseDown} onMouseUp={handleMouseup} onClick={handlePixelClick} onMouseMove={handlePixelOver}></td>
     );
 }
 

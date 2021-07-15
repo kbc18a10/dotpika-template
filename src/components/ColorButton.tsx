@@ -12,7 +12,7 @@ const ColorButton = (props: ColorButtonProps) => {
     } 
     
     return(
-        <button type="button" id={"button" + value.charAt(0).toUpperCase() + value.slice(1)} name={"button" + value.charAt(0).toUpperCase() + value.slice(1)} onClick={handleColorChange}/>
+        <button type="button" className='colorButton' id={"button" + value.charAt(0).toUpperCase() + value.slice(1)} name={"button" + value.charAt(0).toUpperCase() + value.slice(1)} onClick={handleColorChange}/>
     );
 }
 
