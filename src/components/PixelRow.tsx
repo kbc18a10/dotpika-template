@@ -5,12 +5,12 @@ type PixelRowProps = {
     pixel: Dot;
     onMouseDown: () => void;
     onMouseUp: () => void;
-    onPixelOver: (x:number,y:number,red:string,green:string,blue:string) => void;
-    onPixelClick: (x:number,y:number,red:string,green:string,blue:string) => void;
+    onPixelOver: (x:number,y:number) => void;
+    onPixelClick: (x:number,y:number) => void;
 }
 
 const PixelRow = React.memo((props: PixelRowProps) => {
-    const {x,y,red,green,blue} = props.pixel;
+    const {x,y} = props.pixel;
 
     const handleMouseDown = () => {
         props.onMouseDown();
@@ -21,11 +21,11 @@ const PixelRow = React.memo((props: PixelRowProps) => {
     }
 
    const handlePixelOver = () => {
-        props.onPixelOver(x,y,red,green,blue);
+        props.onPixelOver(x,y);
     }
 
     const handlePixelClick = () => {
-        props.onPixelClick(x,y,red,green,blue);
+        props.onPixelClick(x,y);
     }
     
     
